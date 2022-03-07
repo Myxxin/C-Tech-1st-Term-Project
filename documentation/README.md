@@ -58,3 +58,75 @@ Except for the stupid pillar, they also look pretty good with my current shader 
   
 <img src="imgs/04.png" width="500">
 
+## 28th of February + 1st of March - Movement
+
+After the other final projects and an unfortunate corona-break, I'm finally back on this project.  
+I started going through the movement tutorial series by catlikecoding. 
+I also once again adjusted my assets so that player controller can slide up the stairs on a ramp:
+
+<img src = "imgs/05.png" width="500">
+
+The mesh collider is a bit messy, but it gets the job done and I don't have the time to dwell on this. 
+
+## 2nd + 3rd of March - Gravity
+
+I looked into how to switch the gravitation. One problem that I encountered was the rotation of a the player controller while walking around a planet. I didn't manage to allign the camera with the gravity so now I simply use a sphere with a camera inside instead. A bit like in Super Monkey Ball:
+
+<img src = "https://images.nintendolife.com/9cfb45cb132b9/classic-aiai-in-super-monkey-ball-banana-mania.original.jpg" width = "500">
+
+I think I could achieve the ideal Super Mario Galaxy solution with more time, but this was the most simple fix. The obvious downside is that the radius of the player controller is quite huge as a result, but for my simple "game" it shouldn't be an issue. The adjustment of the camera is still a bit janky when switching between different gravities. 
+
+I experimented a lot and now I'm confident that I can implement lots of gravity switching quite easily. I'm a bit ashamed how relient I am on the catlikecoding tutorials. But I also have to admit that I'd see it as quite boring to work on my movement scripts for a month - I'm more of a visual guy after all. 
+
+## 4th of March - rack up
+
+I copied all the movement, camera and gravity scrips into my inital project and started to build the beginning of my scene. I had to fix some of my assets again (does this nightmare never end?) and played some more with the parameters of the player controller, but all the basics are now in place. I'll now look into the visuals before I build the entirety of the scene. 
+
+## 5th of March - More asset shenanigans
+
+I wanted to start the look development today, but quickly noticed that some of my assets would flicker like hell when lighted with non-directional lights at certain angles. I spend the entire day fixing this...
+Probuilder should not exist. 
+
+## 6th of March - Look Development and breakthrough
+
+I finally took the dive into [Unity's High Definition Render Pipeline (HDRP)](https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@6.9/manual/HDRP-Features.html).  
+So far, my whole experience with Unity was very unpleasent, so my expectations for the look development were also very low. But instead of the expected lack of expected features and obscure parameters, I was presented with an amazing set of extensive features that are hands-on but still deep enough if needed.
+In addition to the documentation, [this official tutorial proved also to be quite useful](https://www.youtube.com/watch?v=yqCHiZrgKzs&t=1516s). 
+I ended up with this look:
+
+<img src="imgs/06.png" width="1000">
+<img src="imgs/07.png" width="1000">
+
+
+
+
+
+One thing the HDRP is very good at is mixing realistic physics-based lighting and effects with other settings that are not realistic at all. Many parameters are already well known from real-life cameras and lights. 
+I twiddled away for hours and slowly gravitated to the look above and differs quite a bit from my initial moodboard.
+One reason for this is that the HDRP is AMAZING at imitating the warm look of fuzzy old lightbulbs. 
+The other one is probably my eternal love for Journey by Thatgamecompany:
+
+<img src="imgs/08.jpg" width="500">
+
+In ten years I'll be there...  
+The HDRP makes it super easy to find a unique style. All the tools I wanted (and more) are here and work out of the box. Even the silly film grain. The volumetric fog/light was so easy to setup. 
+Compared to everything else, I had much much more fun with this and I'm super fascinated by this topic. It didn't feel like work at all. 
+
+## 7th of March - Trail of Lights.
+
+With this new-found enthusiasm, I battled the trail renderer.   
+I looked into the shader-graph and some examples for custom trails, but wasn't too impressed.  
+I didn't find anything that could fit the style of my project and didn't want to overwrite my default HDRP shader out of fear that I might loose cohesion. So I tried out the default trail renderer and was pleasently surprised.  
+The default trail renderer has a pretty poor reputation, but in combination with the HDRP it can look very beautiful.  
+My first attempt was to just throw my standard material onto the trail and it was quite nice due to the lights and shadows: 
+
+<img src="imgs/09.png" width="1000">
+
+Looks a bit like wires and I like that effect, but it's not really a trail of lights. The trail renderer can only render lines and not dots (unless you use a custom texture I assume), but I can use this to my advantage by putting an emmissive material on a very thin trail. Combined with all the visueal effects and a modulated width, the trail looks like a mixture of single chained lights and thicker light-rays:   
+<img src="imgs/10.png" width="1000">  
+Thanks to a visual glicht, this trail flickers constantly, but that actually looks really good thanks to the anti-aliasing! The trail never looks sharp even with all the post-processing turned off. I guess light just isn't sharp? The look might be improved with a higher quality noise texture for the fog, but even my PC wouldn't be able to handle that.  
+Both options have the same performance cost (with the shadow-cast turned off), so it's very hard for me decide which one to choose. Woe is me...
+
+
+
+
